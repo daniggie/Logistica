@@ -61,7 +61,7 @@ public class PessoaController {
             return ResponseEntity.notFound().build();
         }
 
-        pessoaRepository.deleteById(pessoaId);
+        pessoaService.excluir(pessoaId);
         return ResponseEntity.noContent().build();
     }
 }
