@@ -1,6 +1,6 @@
 package br.com.senai.domain.model;
 
-import com.sun.istack.NotNull;
+import br.com.senai.domain.ValidationGroups;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @NoArgsConstructor
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class Pessoa {
 
+    @NotNull(groups = ValidationGroups.ClienteId.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
