@@ -1,18 +1,24 @@
 package br.com.senai.domain.service;
 
+import br.com.senai.api.assembler.PessoaAssembler;
+import br.com.senai.api.model.EntregaModel;
+import br.com.senai.api.model.PessoaModel;
 import br.com.senai.domain.exception.NegocioException;
 import br.com.senai.domain.model.Pessoa;
 import br.com.senai.domain.repository.PessoaRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class PessoaService {
 
     private PessoaRepository pessoaRepository;
+    private PessoaAssembler pessoaAssembler;
 
     @Transactional
     public Pessoa cadastrar(Pessoa pessoa){
@@ -35,6 +41,26 @@ public class PessoaService {
     public Pessoa buscar(Long pessoaId){
         return  pessoaRepository.findById(pessoaId)
                 .orElseThrow(()->new NegocioException("Pessoa não encontrada."));
+    }
+
+    public ResponseEntity<PessoaModel> buscarPessoaModel(Long pessoaId){
+        return  pessoaRepository.findById(pessoaId)
+                .map(pessoa ->
+                    ResponseEntity.ok(pessoaAssembler.toModel(pessoa))
+                )
+                .orElseThrow(()->new NegocioException("Pessoa não encontrada."));
+    }
+
+    public List<PessoaModel> listar(){
+        return pessoaAssembler.toCollectionModel(pessoaRepository.findAll());
+    }
+
+    public List<PessoaModel> listarPorNome(String pessoaNome){
+        return pessoaAssembler.toCollectionModel(pessoaRepository.findByNome(pessoaNome));
+    }
+
+    public List<PessoaModel> listarNomeContaining(String nomeContaining){
+        return pessoaAssembler.toCollectionModel(pessoaRepository.findByNomeContaining(nomeContaining));
     }
 }
 
