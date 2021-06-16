@@ -27,9 +27,8 @@ public class PessoaAssembler {
                 .collect(Collectors.toList());
     }
 
-    public Entrega toEntity(EntregaInput entregaInput){
-        return modelMapper.map(entregaInput, Entrega.class);
+    public Pessoa toEntity(PessoaModel pessoaModel){
+        return modelMapper.map(pessoaModel, Pessoa.class);
     }
-
 
 }

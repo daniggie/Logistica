@@ -4,13 +4,16 @@ import br.com.senai.api.assembler.PessoaAssembler;
 import br.com.senai.api.model.EntregaModel;
 import br.com.senai.api.model.PessoaModel;
 import br.com.senai.domain.exception.NegocioException;
+import br.com.senai.domain.model.Entrega;
 import br.com.senai.domain.model.Pessoa;
+import br.com.senai.domain.model.StatusEntrega;
 import br.com.senai.domain.repository.PessoaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -62,6 +65,24 @@ public class PessoaService {
     public List<PessoaModel> listarNomeContaining(String nomeContaining){
         return pessoaAssembler.toCollectionModel(pessoaRepository.findByNomeContaining(nomeContaining));
     }
+
+    public ResponseEntity<PessoaModel> editar(Long pessoaId, Pessoa pessoa){
+        if(!pessoaRepository.existsById(pessoaId)){
+            throw new NegocioException("Pessoa inexistente");
+
+        }
+        boolean emailValidation = pessoaRepository.findByEmail(pessoa.getEmail())
+                .isPresent();
+
+        if(emailValidation){
+            throw new NegocioException("E-mail já está sendo utilizado");
+        }
+        pessoa.setId(pessoaId);
+        pessoa = pessoaRepository.save(pessoa);
+
+        return ResponseEntity.ok(pessoaAssembler.toModel(pessoa));
+    }
+
 }
 
 
