@@ -50,18 +50,6 @@ public class PessoaController {
         return pessoaAssembler.toModel(pessoa);
     }
 
-//    @PutMapping("/{pessoaId}")
-//    public ResponseEntity<Pessoa> editar(@Valid @PathVariable Long pessoaId, @RequestBody Pessoa pessoa){
-//
-//        if(!pessoaRepository.existsById(pessoaId)){
-//            return ResponseEntity.notFound().build();
-//        }
-//        pessoa.setId(pessoaId);
-//        pessoa = pessoaRepository.save(pessoa);
-//        return ResponseEntity.ok(pessoa);
-//    }
-//
-
     @PutMapping("/{pessoaId}")
     public ResponseEntity<PessoaModel> editar(@Valid @PathVariable Long pessoaId, @RequestBody Pessoa pessoa){
         return pessoaService.editar(pessoaId, pessoa);
