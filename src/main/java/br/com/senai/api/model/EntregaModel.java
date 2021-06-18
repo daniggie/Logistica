@@ -18,7 +18,7 @@ public class EntregaModel {
 
     private BigDecimal taxa;
 
-    private StatusEntrega statusModel;
+    private StatusEntrega status;
 
     private LocalDateTime dataPedido;
 

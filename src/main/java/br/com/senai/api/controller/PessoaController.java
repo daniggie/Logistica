@@ -18,7 +18,10 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/pessoas")
-public class PessoaController {
+public class
+
+
+PessoaController {
 
     private PessoaRepository pessoaRepository;
     private PessoaService pessoaService;
