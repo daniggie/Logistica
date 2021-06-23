@@ -1,6 +1,5 @@
 package br.com.senai.api.model;
 import br.com.senai.domain.model.StatusEntrega;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import java.math.BigDecimal;
@@ -8,13 +7,13 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class EntregaModel {
+public class EntregaDTO {
 
     private Long id;
 
     private String nomePessoa;
 
-    private DestinatarioModel destinatario;
+    private DestinatarioDTO destinatario;
 
     private BigDecimal taxa;
 

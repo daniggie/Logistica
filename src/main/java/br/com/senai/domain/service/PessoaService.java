@@ -1,19 +1,15 @@
 package br.com.senai.domain.service;
 
 import br.com.senai.api.assembler.PessoaAssembler;
-import br.com.senai.api.model.EntregaModel;
-import br.com.senai.api.model.PessoaModel;
+import br.com.senai.api.model.PessoaDTO;
 import br.com.senai.domain.exception.NegocioException;
-import br.com.senai.domain.model.Entrega;
 import br.com.senai.domain.model.Pessoa;
-import br.com.senai.domain.model.StatusEntrega;
 import br.com.senai.domain.repository.PessoaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -25,12 +21,12 @@ public class PessoaService {
 
     @Transactional
     public Pessoa cadastrar(Pessoa pessoa){
-        boolean emailValidation = pessoaRepository.findByEmail(pessoa.getEmail())
-                .isPresent();
-
-        if(emailValidation){
-            throw new NegocioException("E-mail já está sendo utilizado");
-        }
+//        boolean emailValidation = pessoaRepository.findByEmail(pessoa.getEmail())
+//                .isPresent();
+//
+//        if(emailValidation){
+//            throw new NegocioException("E-mail já está sendo utilizado");
+//        }
 
         return pessoaRepository.save(pessoa);
 
@@ -46,7 +42,7 @@ public class PessoaService {
                 .orElseThrow(()->new NegocioException("Pessoa não encontrada."));
     }
 
-    public ResponseEntity<PessoaModel> buscarPessoaModel(Long pessoaId){
+    public ResponseEntity<PessoaDTO> buscarPessoaModel(Long pessoaId){
         return  pessoaRepository.findById(pessoaId)
                 .map(pessoa ->
                     ResponseEntity.ok(pessoaAssembler.toModel(pessoa))
@@ -54,30 +50,30 @@ public class PessoaService {
                 .orElseThrow(()->new NegocioException("Pessoa não encontrada."));
     }
 
-    public List<PessoaModel> listar(){
+    public List<PessoaDTO> listar(){
         return pessoaAssembler.toCollectionModel(pessoaRepository.findAll());
     }
 
-    public List<PessoaModel> listarPorNome(String pessoaNome){
+    public List<PessoaDTO> listarPorNome(String pessoaNome){
         return pessoaAssembler.toCollectionModel(pessoaRepository.findByNome(pessoaNome));
     }
 
-    public List<PessoaModel> listarNomeContaining(String nomeContaining){
+    public List<PessoaDTO> listarNomeContaining(String nomeContaining){
         return pessoaAssembler.toCollectionModel(pessoaRepository.findByNomeContaining(nomeContaining));
     }
 
-    public ResponseEntity<PessoaModel> editar(Long pessoaId, Pessoa pessoa){
+    public ResponseEntity<PessoaDTO> editar(Long pessoaId, Pessoa pessoa){
         if(!pessoaRepository.existsById(pessoaId)){
             throw new NegocioException("Pessoa inexistente");
         }
-        Pessoa pessoa1 = this.buscar(pessoaId);
-        if (!pessoa.getEmail().equals(pessoa1.getEmail())){
-            boolean emailValidation = pessoaRepository.findByEmail(pessoa.getEmail())
-                    .isPresent();
-            if(emailValidation){
-                throw new NegocioException("E-mail já está sendo utilizado");
-            }
-        }
+//        Pessoa pessoa1 = this.buscar(pessoaId);
+//        if (!pessoa.getEmail().equals(pessoa1.getEmail())){
+//            boolean emailValidation = pessoaRepository.findByEmail(pessoa.getEmail())
+//                    .isPresent();
+//            if(emailValidation){
+//                throw new NegocioException("E-mail já está sendo utilizado");
+//            }
+//        }
         pessoa.setId(pessoaId);
         pessoa = pessoaRepository.save(pessoa);
 
