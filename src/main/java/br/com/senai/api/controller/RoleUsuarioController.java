@@ -2,7 +2,6 @@ package br.com.senai.api.controller;
 
 import br.com.senai.api.assembler.RoleUsuarioAssembler;
 import br.com.senai.api.model.RoleUsuarioDTO;
-import br.com.senai.domain.model.Role;
 import br.com.senai.domain.model.RoleUsuarios;
 import br.com.senai.domain.service.RoleUsuariosService;
 import lombok.AllArgsConstructor;

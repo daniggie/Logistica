@@ -24,13 +24,12 @@ public class Usuario implements UserDetails {
 
     @ManyToMany
     @JoinTable(name = "role_usuarios",
-            joinColumns = @JoinColumn(name = "usuarios_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_nome_role", referencedColumnName = "nomeRole"))
-    private List<Role> roles;
+            joinColumns = @JoinColumn(name = "usuarios_id", referencedColumnName = "id"))
+    private List<RoleUsuarios> roleUsuarios;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return (Collection<? extends GrantedAuthority>) this.roles;
+        return (Collection<? extends GrantedAuthority>) this.roleUsuarios;
     }
 
     @Override

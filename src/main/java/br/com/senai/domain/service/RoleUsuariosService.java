@@ -4,7 +4,11 @@ import br.com.senai.api.assembler.RoleUsuarioAssembler;
 import br.com.senai.api.model.RoleUsuarioDTO;
 import br.com.senai.domain.model.RoleUsuarios;
 import br.com.senai.domain.repository.RoleUsuarioRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
+@Service
 public class RoleUsuariosService {
 
     private RoleUsuarioRepository roleUsuarioRepository;
