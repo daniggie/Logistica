@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -23,11 +24,13 @@ public class PessoaController {
     private PessoaAssembler pessoaAssembler;
 
     @GetMapping
-    public List<PessoaDTO> listar(){ return pessoaService.listar();}
+    public List<PessoaDTO> listar(Pessoa pessoa){
+    return pessoaService.listar(pessoa);
+    }
 
     @GetMapping("/nome/{pessoaNome}")
-   public List<PessoaDTO> listarPorNome(@PathVariable String pessoaNome){
-       return pessoaService.listarPorNome(pessoaNome);
+    public List<PessoaDTO> listarPorNome(@PathVariable String pessoaNome, Pessoa pessoa){
+        return pessoaService.listarPorNome(pessoaNome);
     }
 
     @GetMapping("/nome/containing/{nomeContaining}")
@@ -37,22 +40,33 @@ public class PessoaController {
 
     @GetMapping("{pessoaId}")
     public ResponseEntity<PessoaDTO> buscar(@PathVariable Long pessoaId){
-    return pessoaService.buscarPessoaModel(pessoaId);
+//        Optional<Pessoa> pessoa = pessoaRepository.findById(pessoaId);
+
+//        if(pessoa.isPresent()){
+//            return ResponseEntity.ok(pessoa.get());
+//        }
+//        return ResponseEntity.notFound().build();
+
+        return pessoaService.buscarPessoa(pessoaId);
+
     }
 
     @PostMapping
     public PessoaDTO cadastrar(@Valid @RequestBody PessoaInputDTO pessoaInputDTO){
-        Pessoa novaPessoa = pessoaAssembler.toEntity(pessoaInputDTO);
-        novaPessoa.getUsuario().setSenha(
-                new BCryptPasswordEncoder().encode(pessoaInputDTO.getUsuario().getSenha()));
-        Pessoa pessoa = pessoaService.cadastrar(novaPessoa);
+        Pessoa newPessoa = pessoaAssembler.toEntity(pessoaInputDTO);
+         newPessoa.getUsuario()
+                 .setSenha(new BCryptPasswordEncoder().encode(pessoaInputDTO.getUsuario().getSenha()));
+
+        Pessoa pessoa = pessoaService.cadastrar(newPessoa);
 
         return pessoaAssembler.toModel(pessoa);
+
     }
 
     @PutMapping("/{pessoaId}")
-    public ResponseEntity<PessoaDTO> editar(@Valid @PathVariable Long pessoaId, @RequestBody Pessoa pessoa){
-        return pessoaService.editar(pessoaId, pessoa);
+    public ResponseEntity<PessoaDTO> editar(@Valid @PathVariable  Long pessoaId, @RequestBody Pessoa pessoa){
+
+        return pessoaService.editar(pessoaId,pessoa);
     }
 
     @DeleteMapping("/{pessoaId}")
@@ -62,6 +76,8 @@ public class PessoaController {
         }
 
         pessoaService.excluir(pessoaId);
+
         return ResponseEntity.noContent().build();
     }
+
 }

@@ -4,12 +4,15 @@ import br.com.senai.api.assembler.PessoaAssembler;
 import br.com.senai.api.model.PessoaDTO;
 import br.com.senai.domain.exception.NegocioException;
 import br.com.senai.domain.model.Pessoa;
+import br.com.senai.domain.model.RoleUsuario;
+import br.com.senai.domain.model.Usuario;
 import br.com.senai.domain.repository.PessoaRepository;
+import br.com.senai.domain.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,78 +20,97 @@ import java.util.List;
 public class PessoaService {
 
     private PessoaRepository pessoaRepository;
-    private PessoaAssembler pessoaAssembler;
+    private PessoaAssembler  pessoaAssembler;
+    private RoleUsuarioService roleUsuarioService;
 
     @Transactional
-    public Pessoa cadastrar(Pessoa pessoa){
-//        boolean emailValidation = pessoaRepository.findByEmail(pessoa.getEmail())
-//                .isPresent();
+    public Pessoa cadastrar(Pessoa pessoa) {
 //
-//        if(emailValidation){
-//            throw new NegocioException("E-mail já está sendo utilizado");
+//
+//        boolean emailValidation = pessoaRepository.findByEmail(pessoa.getEmail()).isPresent();
+//
+//        if (emailValidation) {
+//            throw new NegocioException("Já existe uma pessoa com este e-mail cadastrado");
 //        }
+         Pessoa novaPessoa = pessoaRepository.save(pessoa);
 
-        return pessoaRepository.save(pessoa);
+        RoleUsuario novaRole = new RoleUsuario();
 
+        novaRole.setUsuarios_id(novaPessoa.getUsuario().getId());
+        novaRole.setRole_nome_role("ROLE_USER");
+
+        roleUsuarioService.cadastrar(novaRole);
+
+        return novaPessoa;
     }
 
-    @Transactional
-    public void excluir(Long pessoaId){
+        @Transactional
+        public void excluir(Long pessoaId){
+
         pessoaRepository.deleteById(pessoaId);
-    }
 
-    public Pessoa buscar(Long pessoaId){
-        return  pessoaRepository.findById(pessoaId)
+            throw new NegocioException("Pessoa deletada");
+
+        }
+
+        public Pessoa buscar(Long pessoaId){
+        return pessoaRepository.findById(pessoaId)
                 .orElseThrow(()->new NegocioException("Pessoa não encontrada."));
+        }
+
+    public ResponseEntity<PessoaDTO> buscarPessoa(Long pessoaId) {
+        return pessoaRepository.findById(pessoaId).map(entrega -> {
+
+            return ResponseEntity.ok(pessoaAssembler.toModel(entrega));
+        })
+                .orElseThrow(()-> new NegocioException("Pessoa não encontrada"));
+
     }
 
-    public ResponseEntity<PessoaDTO> buscarPessoaModel(Long pessoaId){
-        return  pessoaRepository.findById(pessoaId)
-                .map(pessoa ->
-                    ResponseEntity.ok(pessoaAssembler.toModel(pessoa))
-                )
-                .orElseThrow(()->new NegocioException("Pessoa não encontrada."));
-    }
+    public List<PessoaDTO> listar(Pessoa pessoa){
 
-    public List<PessoaDTO> listar(){
+        boolean ListValidation = pessoaRepository.findAll().isEmpty();
+
+        if (ListValidation) {
+            throw new NegocioException("Não existe nenhuma pessoa cadastrada");
+        }
+
         return pessoaAssembler.toCollectionModel(pessoaRepository.findAll());
     }
 
-    public List<PessoaDTO> listarPorNome(String pessoaNome){
-        return pessoaAssembler.toCollectionModel(pessoaRepository.findByNome(pessoaNome));
+    public List<PessoaDTO> listarPorNome(String nome){
+
+        boolean nomeValidation = pessoaRepository.findByNome(nome).isEmpty();
+
+        if (nomeValidation) {
+            throw new NegocioException("Não existe nenhuma pessoa cadastrada com este nome");
+        }
+
+        return pessoaAssembler.toCollectionModel(pessoaRepository.findByNome(nome));
     }
 
+
     public List<PessoaDTO> listarNomeContaining(String nomeContaining){
+
+        boolean containingValidation = pessoaRepository.findByNomeContaining(nomeContaining).isEmpty();
+
+        if (containingValidation) {
+            throw new NegocioException("Não encontrado");
+        }
+
         return pessoaAssembler.toCollectionModel(pessoaRepository.findByNomeContaining(nomeContaining));
     }
 
     public ResponseEntity<PessoaDTO> editar(Long pessoaId, Pessoa pessoa){
         if(!pessoaRepository.existsById(pessoaId)){
-            throw new NegocioException("Pessoa inexistente");
+            throw new NegocioException("Id não encontrado");
         }
-//        Pessoa pessoa1 = this.buscar(pessoaId);
-//        if (!pessoa.getEmail().equals(pessoa1.getEmail())){
-//            boolean emailValidation = pessoaRepository.findByEmail(pessoa.getEmail())
-//                    .isPresent();
-//            if(emailValidation){
-//                throw new NegocioException("E-mail já está sendo utilizado");
-//            }
-//        }
+
         pessoa.setId(pessoaId);
         pessoa = pessoaRepository.save(pessoa);
 
         return ResponseEntity.ok(pessoaAssembler.toModel(pessoa));
     }
 
+
 }
-
-
-
-
-
-
-
-
-
-
-

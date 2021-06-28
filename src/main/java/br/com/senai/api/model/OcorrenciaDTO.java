@@ -5,13 +5,11 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
 @Setter
+@Getter
 public class OcorrenciaDTO {
 
     private Long id;
     private String descricao;
     private LocalDateTime dataRegistro;
-
 }
-

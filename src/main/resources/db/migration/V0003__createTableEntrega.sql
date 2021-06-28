@@ -1,7 +1,8 @@
-CREATE TABLE entregas (
+
+CREATE TABLE entregas(
     id bigint not null auto_increment,
     pessoa_id bigint not null,
-    taxa decimal(10, 2) not null,
+    taxa decimal(10,2) not null,
     status varchar(20) not null,
     data_pedido timestamp not null,
     data_finalizacao timestamp,
@@ -16,4 +17,4 @@ CREATE TABLE entregas (
 );
 
 ALTER TABLE entregas ADD CONSTRAINT fk_entregas_pessoa
-FOREIGN KEY (pessoa_id) REFERENCES pessoa (id);
+FOREIGN KEY(pessoa_id) REFERENCES pessoa(id);

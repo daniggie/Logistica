@@ -1,15 +1,17 @@
 package br.com.senai.api.model;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 public class DestinatarioDTO {
 
-    private String nome;
-    private String logradouro;
-    private String numero;
-    private String complemento;
-    private String bairro;
+    public String nome;
+    public String logradouro;
+    public String numero;
+    public String complemento;
+    public String bairro;
+
 }

@@ -32,14 +32,28 @@ public class SolicitacaoEntregaService {
     }
 
     public List<EntregaDTO> listar(){
+
         return entregaAssembler.toCollectionModel(entregaRepository.findAll());
     }
 
-    public ResponseEntity<EntregaDTO> buscar(Long entregaId){
-        return entregaRepository.findById(entregaId)
-                .map(entrega -> {
-                    return ResponseEntity.ok(entregaAssembler.toModel(entrega));
-                })
+    public ResponseEntity<EntregaDTO> buscar(Long entregaId) {
+        return entregaRepository.findById(entregaId).map(entrega -> {
+//            EntregaModel entregaModel = new EntregaModel();
+
+//            entregaModel.setId(entrega.getId());
+//            entregaModel.setNomePessoa(entrega.getPessoa().getNome());
+//            entregaModel.setDestinatario(new DestinatarioModel());
+//            entregaModel.getDestinatario().setNome(entrega.getDestinatario().getNome());
+//            entregaModel.getDestinatario().setLogradouro(entrega.getDestinatario().getLogradouro());
+//            entregaModel.getDestinatario().setNumero(entrega.getDestinatario().getNumero());
+//            entregaModel.getDestinatario().setComplemento(entrega.getDestinatario().getComplemento());
+//            entregaModel.getDestinatario().setBairro(entrega.getDestinatario().getBairro());
+//            entregaModel.setTaxa(entrega.getTaxa());
+
+            return ResponseEntity.ok(entregaAssembler.toModel(entrega));
+        })
                 .orElse(ResponseEntity.notFound().build());
+
     }
+
 }

@@ -4,26 +4,24 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.List;
 
-@Getter
 @Setter
+@Getter
 @Entity
-public class RoleUsuarios implements GrantedAuthority {
+public class Role implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String roleNomeRole;
+    private String nomeRole;
 
     @ManyToMany
     private List<Usuario> usuarios;
 
     @Override
     public String getAuthority() {
-        return this.roleNomeRole;
+        return this.nomeRole;
     }
-
 }

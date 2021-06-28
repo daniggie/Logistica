@@ -3,9 +3,9 @@ package br.com.senai.domain.service;
 import br.com.senai.domain.model.Entrega;
 import br.com.senai.domain.model.Ocorrencia;
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
@@ -15,8 +15,9 @@ public class OcorrenciaService {
 
     @Transactional
     public Ocorrencia registrar(Long entregaId, String descricao){
+
         Entrega entrega = entregaService.buscaEntrega(entregaId);
 
-        return entrega.adicionaOcorrencia(descricao);
+        return entrega.adicionarOcorrencia(descricao);
     }
 }

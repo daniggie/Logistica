@@ -1,4 +1,4 @@
-package br.com.senai.secutiry;
+package br.com.senai.security;
 
 import br.com.senai.domain.exception.NegocioException;
 import br.com.senai.domain.model.Usuario;
@@ -9,22 +9,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Repository
 @Transactional
-public class ImplementsUserDetailsService implements UserDetailsService {
+public class ImplementUserDetailsService implements UserDetailsService {
 
     private UsuarioRepository usuarioRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         Usuario usuario = usuarioRepository.findByEmail(email);
 
-        if(usuario == null){
-            throw new NegocioException("Usuário ou senha inválidos");
+        if (usuario == null){
+            throw new NegocioException("Usuario ou senha incorretos");
         }
 
         return new User(

@@ -25,11 +25,12 @@ public class EntregaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EntregaDTO solicitar(@Valid @RequestBody EntregaInputDTO entregaInput){
-        Entrega novaEntrega = entregaAssembler.toEntity(entregaInput);
+    public EntregaDTO solicitar(@Valid @RequestBody EntregaInputDTO entregaInputDTO){
+        Entrega novaEntrega = entregaAssembler.toEntity(entregaInputDTO);
         Entrega entrega = solicitacaoEntregaService.solicitar(novaEntrega);
 
         return entregaAssembler.toModel(entrega);
+
     }
 
     @GetMapping
@@ -37,14 +38,17 @@ public class EntregaController {
         return solicitacaoEntregaService.listar();
     }
 
+
     @GetMapping("/{entregaId}")
     public ResponseEntity<EntregaDTO> buscar(@PathVariable Long entregaId){
         return solicitacaoEntregaService.buscar(entregaId);
+
     }
 
     @PutMapping("/{entregaId}/finalizacao")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void finalizar(@PathVariable Long entregaId){
+
         entregaService.finalizar(entregaId);
     }
 }

@@ -1,14 +1,13 @@
 package br.com.senai.domain.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
 @Setter
+@Getter
 @Entity
 public class Ocorrencia {
 
@@ -22,5 +21,4 @@ public class Ocorrencia {
     private String descricao;
 
     private LocalDateTime dataRegistro;
-
 }

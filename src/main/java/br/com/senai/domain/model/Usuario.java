@@ -9,8 +9,8 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
-@Getter
 @Setter
+@Getter
 @Entity
 public class Usuario implements UserDetails {
 
@@ -19,17 +19,17 @@ public class Usuario implements UserDetails {
     private Long id;
 
     private String email;
-
     private String senha;
 
     @ManyToMany
-    @JoinTable(name = "role_usuarios",
-            joinColumns = @JoinColumn(name = "usuarios_id", referencedColumnName = "id"))
-    private List<RoleUsuarios> roleUsuarios;
+    @JoinTable(name = "role_usuarios", joinColumns = @JoinColumn(name = "usuarios_id",
+    referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "role_nome_role",referencedColumnName = "nomeRole"))
+    private List<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return (Collection<? extends GrantedAuthority>) this.roleUsuarios;
+        return (Collection<? extends GrantedAuthority>) this.roles;
     }
 
     @Override

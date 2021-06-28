@@ -6,8 +6,8 @@ import lombok.Setter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-@Getter
 @Setter
+@Getter
 public class UsuarioInputDTO {
 
     @NotBlank
@@ -15,6 +15,5 @@ public class UsuarioInputDTO {
     private String email;
 
     @NotBlank
-    private String senha;
-
+    private  String senha;
 }

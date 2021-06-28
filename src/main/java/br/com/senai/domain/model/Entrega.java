@@ -30,7 +30,7 @@ public class Entrega {
     @ConvertGroup(from = Default.class, to = ValidationGroups.ClienteId.class)
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "pessoa_id")
+    @JoinColumn (name = "pessoa_id")
     private Pessoa pessoa;
 
     @Valid
@@ -45,6 +45,7 @@ public class Entrega {
     @OneToMany(mappedBy = "entrega", cascade = CascadeType.ALL)
     private List<Ocorrencia> ocorrencias = new ArrayList<>();
 
+
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
     private StatusEntrega status;
@@ -56,15 +57,23 @@ public class Entrega {
     private LocalDateTime dataFinalizacao;
 
     public void finalizar() {
-
-        if(!StatusEntrega.PENDENTE.equals(getStatus())){
+        if(naoPodeSerFinalizada()){
             throw new NegocioException("Entrega não pode ser finalizada");
         }
+
         setStatus(StatusEntrega.FINALIZADA);
         setDataFinalizacao(LocalDateTime.now());
     }
 
-    public Ocorrencia adicionaOcorrencia(String descricao){
+    public boolean podeSerFinalizada(){
+        return StatusEntrega.PENDENTE.equals(getStatus());
+    }
+
+    public boolean naoPodeSerFinalizada(){
+        return !podeSerFinalizada();
+    }
+
+    public Ocorrencia adicionarOcorrencia(String descricao){
         Ocorrencia ocorrencia = new Ocorrencia();
 
         ocorrencia.setDescricao(descricao);
@@ -72,7 +81,7 @@ public class Entrega {
         ocorrencia.setEntrega(this);
 
         this.getOcorrencias().add(ocorrencia);
+
         return ocorrencia;
     }
-
 }

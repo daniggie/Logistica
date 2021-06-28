@@ -1,22 +1,21 @@
 package br.com.senai.api.model.input;
 
-import br.com.senai.api.model.UsuarioDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Getter
 @Setter
+@Getter
 public class PessoaInputDTO {
 
     @NotBlank
     private String nome;
 
     @NotNull
-    private UsuarioDTO usuario;
+    private UsuarioInputDTO usuario;
 
     @NotBlank
-    private String telephone;
+    private String telefone;
 }

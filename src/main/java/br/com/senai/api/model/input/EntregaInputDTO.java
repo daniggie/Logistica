@@ -7,13 +7,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-@Getter
 @Setter
+@Getter
 public class EntregaInputDTO {
 
     @Valid
     @NotNull
-    private ClienteInputDTO pessoa;
+    private PessoaIdInputDTO pessoa;
 
     @Valid
     @NotNull
@@ -21,6 +21,5 @@ public class EntregaInputDTO {
 
     @NotNull
     private BigDecimal taxa;
-
 
 }

@@ -2,13 +2,13 @@ package br.com.senai.domain.model;
 
 import br.com.senai.domain.ValidationGroups;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.NotFound;
 
 import static lombok.AccessLevel.PRIVATE;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -26,11 +26,16 @@ public class Pessoa {
     @NotNull(groups = ValidationGroups.ClienteId.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+     long id;
 
     @NotBlank
-    @Size(max = 60)
-    String nome;
+    @Size(max = 50)
+     String nome;
+
+//    @NotBlank
+//    @Email
+//    @Size(min = 5)
+//     String email;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
@@ -38,7 +43,6 @@ public class Pessoa {
 
     @NotBlank
     @Size(min = 14)
-    String telephone;
-
+     String telefone;
 
 }
