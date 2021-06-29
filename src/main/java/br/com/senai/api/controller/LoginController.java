@@ -22,7 +22,7 @@ public class LoginController {
     private ImplementUserDetailsService implementUserDetailsService;
     private JWTUtil jwtUtil;
 
-    @PostMapping("/autheticate")
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken (@RequestBody Usuario usuario) throws Exception{
         try {authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
