@@ -1,6 +1,5 @@
 package br.com.senai.domain.model;
 
-import br.com.senai.domain.ValidationGroups;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,19 +22,18 @@ import javax.validation.constraints.Size;
 @Entity
 public class Pessoa {
 
-    @NotNull(groups = ValidationGroups.ClienteId.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     long id;
+    long id;
 
     @NotBlank
-    @Size(max = 50)
-     String nome;
+    @Size(max = 60)
+    String nome;
 
 //    @NotBlank
 //    @Email
 //    @Size(min = 5)
-//     String email;
+//    String email;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
@@ -43,6 +41,6 @@ public class Pessoa {
 
     @NotBlank
     @Size(min = 14)
-     String telefone;
+    String telefone;
 
 }

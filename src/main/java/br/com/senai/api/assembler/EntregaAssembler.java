@@ -10,9 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-@Component
 @AllArgsConstructor
+@Component
 public class EntregaAssembler {
 
     private ModelMapper modelMapper;
@@ -22,10 +21,13 @@ public class EntregaAssembler {
     }
 
     public List<EntregaDTO> toCollectionModel(List<Entrega> entregas){
-        return entregas.stream().map(this::toModel).collect(Collectors.toList());
+        return entregas.stream()
+                .map(this::toModel)
+                .collect(Collectors.toList());
     }
 
-    public  Entrega toEntity(EntregaInputDTO entregaInputDTO){
+    public Entrega toEntity(EntregaInputDTO entregaInputDTO){
         return modelMapper.map(entregaInputDTO, Entrega.class);
     }
+
 }

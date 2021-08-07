@@ -7,18 +7,16 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Setter
 @Getter
+@Setter
 public class EntregaDTO {
 
-
     private Long id;
-    private PessoaDTO nomePessoa;
+    private PessoaDTO pessoa;
     private DestinatarioDTO destinatario;
     private BigDecimal taxa;
+    private StatusEntrega status;
     private LocalDateTime dataPedido;
     private LocalDateTime dataFinalizacao;
-    private StatusEntrega status;
-
 
 }

@@ -16,7 +16,6 @@ public class EntregaService {
 
     @Transactional
     public void finalizar(Long entregaId){
-
         Entrega entrega = buscaEntrega(entregaId);
 
         entrega.finalizar();
@@ -25,9 +24,7 @@ public class EntregaService {
     }
 
     public Entrega buscaEntrega(Long entregaId){
-
         return entregaRepository.findById(entregaId)
-                .orElseThrow(()-> new EntidadeNaoEncontradaException("Entrega não Encontrada"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Entrega não encontrada."));
     }
-
 }

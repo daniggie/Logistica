@@ -29,12 +29,10 @@ public class JWTUtil {
 
     private Claims extractAllClaims(String token){
         return Jwts.parser()
-                .setSigningKey(Auth.secret)
-                .parseClaimsJws(token)
-                .getBody();
+                .setSigningKey(Auth.secret).parseClaimsJws(token).getBody();
     }
 
-    public Boolean isTokenExpired(String token){
+    private Boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
 
@@ -44,8 +42,7 @@ public class JWTUtil {
     }
 
     private String createToken(Map<String, Object> claims, String subject){
-        return Jwts.builder().setClaims(claims).setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + Auth.expiresIn))
                 .signWith(SignatureAlgorithm.HS256, Auth.secret).compact();
     }

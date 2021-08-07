@@ -15,12 +15,14 @@ public class OcorrenciaAssembler {
 
     private ModelMapper modelMapper;
 
-
     public OcorrenciaDTO toModel(Ocorrencia ocorrencia){
         return modelMapper.map(ocorrencia, OcorrenciaDTO.class);
     }
 
     public List<OcorrenciaDTO> toCollectionModel(List<Ocorrencia> ocorrencias){
-        return ocorrencias.stream().map(this::toModel).collect(Collectors.toList());
+        return ocorrencias.stream()
+                .map(this::toModel)
+                .collect(Collectors.toList());
     }
+
 }

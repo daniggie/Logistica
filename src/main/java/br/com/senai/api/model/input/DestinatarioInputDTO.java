@@ -5,22 +5,22 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
-@Setter
 @Getter
+@Setter
 public class DestinatarioInputDTO {
 
     @NotBlank
-    public String nome;
+    private String nome;
 
     @NotBlank
-    public String logradouro;
+    private String logradouro;
 
     @NotBlank
-    public String numero;
+    private String numero;
 
     @NotBlank
-    public String complemento;
+    private String complemento;
 
     @NotBlank
-    public String bairro;
+    private String bairro;
 }

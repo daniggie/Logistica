@@ -5,11 +5,10 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
-@Setter
 @Getter
+@Setter
 public class PessoaIdInputDTO {
 
     @NotNull
     private Long id;
-
 }

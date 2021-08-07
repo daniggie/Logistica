@@ -1,7 +1,6 @@
 package br.com.senai.api.assembler;
 
 import br.com.senai.api.model.PessoaDTO;
-import br.com.senai.api.model.input.PessoaIdInputDTO;
 import br.com.senai.api.model.input.PessoaInputDTO;
 import br.com.senai.domain.model.Pessoa;
 import lombok.AllArgsConstructor;
@@ -11,24 +10,23 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 @AllArgsConstructor
+@Component
 public class PessoaAssembler {
-    private ModelMapper modelMapper;
+
+    ModelMapper modelMapper;
 
     public PessoaDTO toModel(Pessoa pessoa){
         return modelMapper.map(pessoa, PessoaDTO.class);
     }
 
+    public Pessoa toEntity(PessoaInputDTO pessoaInputDTO){
+        return modelMapper.map(pessoaInputDTO, Pessoa.class);
+    }
+
     public List<PessoaDTO> toCollectionModel(List<Pessoa> pessoas){
-        return pessoas.stream().map(this::toModel).collect(Collectors.toList());
+        return pessoas.stream().map(this::toModel)
+                .collect(Collectors.toList());
     }
 
-    public  Pessoa toEntity(PessoaInputDTO pessoaInput){
-        return modelMapper.map(pessoaInput, Pessoa.class);
-    }
-
-    public  Pessoa toEntity(PessoaDTO pessoaDTO){
-        return modelMapper.map(pessoaDTO, Pessoa.class);
-    }
 }

@@ -7,8 +7,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-@Setter
 @Getter
+@Setter
 public class EntregaInputDTO {
 
     @Valid
@@ -21,5 +21,4 @@ public class EntregaInputDTO {
 
     @NotNull
     private BigDecimal taxa;
-
 }
