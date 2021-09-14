@@ -26,7 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_LIST = {
       "/",
       "/pessoas",
-      "/pessoas/{pessoaId}"
+      "/pessoas/{pessoaId}",
+        "/mail"
     };
 
     @Override
@@ -41,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.PUT, AUTH_LIST).permitAll()
                     .antMatchers(HttpMethod.DELETE, AUTH_LIST).permitAll()
                 .anyRequest().authenticated()
+                .and().cors()
                 .and().sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().logout()
